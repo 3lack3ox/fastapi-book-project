@@ -37,7 +37,7 @@ jobs:
           chmod 600 ~/.ssh/id_rsa  # Secures the key with the right permissions
 
           # This example uses SSH to deploy the app, replace with your actual deployment process
-          ssh -i ~/.ssh/id_rsa ubuntu@184.72.123.253 << 'EOF'
+          ssh -o StrictHostKeyChecking=no ubuntu@184.72.123.253 << 'EOF'
             cd /home/ubuntu/fastapi-book-project  # Navigate to your app directory
             git pull origin main  # Pull the latest code from GitHub
             source venv/bin/activate  # Activate the virtual environment
