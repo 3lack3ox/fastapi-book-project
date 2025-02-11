@@ -32,8 +32,8 @@ jobs:
       - name: Deploy to server
         run: |
           # This example uses SSH to deploy the app, replace with your actual deployment process
-          ssh -o StrictHostKeyChecking=no -i ${{ secrets.DEPLOY_KEY }} user@your-server-ip << 'EOF'
-            cd /path/to/your/app/directory  # Navigate to your app directory
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.DEPLOY_KEY }} ubuntu@184.72.123.253 << 'EOF'
+            cd /home/ubuntu/fastapi-book-project  # Navigate to your app directory
             git pull origin main  # Pull the latest code from GitHub
             source venv/bin/activate  # Activate the virtual environment
             pip install -r requirements.txt  # Install any new dependencies
