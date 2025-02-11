@@ -32,7 +32,9 @@ jobs:
       - name: Deploy to server
         run: |
           # This example uses SSH to deploy the app, replace with your actual deployment process
-          ssh -o StrictHostKeyChecking=no -i ${{ secrets.DEPLOY_KEY }} ubuntu@184.72.123.253 << 'EOF'
+          echo "$DEPLOY_KEY" > /tmp/deploy_key  # Write the SSH key to a file
+          chmod 600 /tmp/deploy_key  # Set proper permissions for the key
+          ssh -o StrictHostKeyChecking=no -i /tmp/deploy_key ubuntu@184.72.123.253 << 'EOF'
             cd /home/ubuntu/fastapi-book-project  # Navigate to your app directory
             git pull origin main  # Pull the latest code from GitHub
             source venv/bin/activate  # Activate the virtual environment
