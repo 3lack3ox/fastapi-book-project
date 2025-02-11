@@ -1,0 +1,49 @@
+name: Deploy FastAPI App
+
+on:
+  push:
+    branches:
+      - main  # This triggers when changes are pushed to the main branch (usually after a PR merge)
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # This specifies that the job will run on an Ubuntu machine
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v4  # Checkout the latest code from the repository
+
+      # Step 2: Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'  # Use Python version 3.12 (or change to your preferred version)
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: |
+          python -m venv venv  # Create a virtual environment
+          source venv/bin/activate  # Activate the virtual environment
+          pip install --upgrade pip  # Upgrade pip
+          pip install -r requirements.txt  # Install the required dependencies
+
+      # Step 4: Deploy the application to your server (e.g., using SSH)
+      - name: Deploy to server
+        run: |
+          # This example uses SSH to deploy the app, replace with your actual deployment process
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.DEPLOY_KEY }} user@your-server-ip << 'EOF'
+            cd /path/to/your/app/directory  # Navigate to your app directory
+            git pull origin main  # Pull the latest code from GitHub
+            source venv/bin/activate  # Activate the virtual environment
+            pip install -r requirements.txt  # Install any new dependencies
+            # Restart the app with Uvicorn or your chosen method
+            pkill -f 'uvicorn'  # Kill any existing Uvicorn process
+            uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload &  # Restart Uvicorn in the background
+          EOF
+
+      # Step 5: Clean up
+      - name: Clean up
+        run: |
+          deactivate  # Deactivate the virtual environment
+
