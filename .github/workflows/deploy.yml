@@ -56,8 +56,3 @@ jobs:
             sleep 10 && kill $(lsof -t -i:8000) # Let it run for 60 seconds, then shut it down
           EOF
 
-      # Step 5: Clean up
-      - name: Clean up
-        run: |
-          deactivate  # Deactivate the virtual environment
-
