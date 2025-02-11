@@ -31,6 +31,11 @@ jobs:
       # Step 4: Deploy the application to your server (e.g., using SSH)
       - name: Deploy to server
         run: |
+          # Ensure private key is available
+          mkdir -p ~/.ssh  # Create the .ssh directory if it doesn't exist
+          echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/id_rsa  # Adds the private key to the runner
+          chmod 600 ~/.ssh/id_rsa  # Secures the key with the right permissions
+
           # This example uses SSH to deploy the app, replace with your actual deployment process
           ssh -i ~/.ssh/id_rsa ubuntu@184.72.123.253 << 'EOF'
             cd /home/ubuntu/fastapi-book-project  # Navigate to your app directory
