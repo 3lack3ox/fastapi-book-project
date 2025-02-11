@@ -53,6 +53,7 @@ jobs:
            
             # Restart the app with Uvicorn or your chosen method
             uvicorn main:app --host 0.0.0.0 --port 8000 --reload & 
+            sleep 10
           EOF
 
       # Step 5: Clean up
