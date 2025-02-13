@@ -22,6 +22,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i private_key ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
             cd /home/ubuntu/fastapi-book-project
             git pull origin main
+            sudo fuser -k 8000/tcp || true
             docker stop fastapi-app || true
             docker rm fastapi-app || true
             docker build -t fastapi-app:latest .
