@@ -22,7 +22,7 @@ async def health_check():
     """Checks if server is active."""
     return {"status": "active"}
 
-@app.get("/test")
+@app.get("/test1")
 async def test_endpoint():
     """A simple test endpoint."""
     return {"message": "Test endpoint is working!"}
